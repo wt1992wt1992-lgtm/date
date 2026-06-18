@@ -103,8 +103,8 @@
     .meme {
       display: grid;
       place-items: center;
-      width: min(44vw, 172px);
-      height: min(44vw, 172px);
+      width: min(48vw, 190px);
+      height: min(48vw, 190px);
       margin-bottom: -4px;
       border-radius: 40% 60% 48% 52% / 48% 45% 55% 52%;
       background: rgba(255, 255, 255, 0.45);
@@ -118,6 +118,44 @@
       height: min(35vw, 136px);
       font-size: min(21vw, 84px);
       margin-bottom: 0;
+    }
+
+    .meme img,
+    .meme-duo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .meme.photo {
+      overflow: hidden;
+      border: 4px solid rgba(255, 255, 255, 0.86);
+      background: #fff;
+    }
+
+    .meme-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: min(78vw, 300px);
+      margin-bottom: -4px;
+      filter: drop-shadow(0 15px 18px rgba(222, 75, 130, 0.16));
+    }
+
+    .meme-duo img {
+      aspect-ratio: 1;
+      border: 4px solid rgba(255, 255, 255, 0.86);
+      border-radius: 28px;
+      background: #fff;
+    }
+
+    .meme-duo img:first-child {
+      transform: rotate(-4deg);
+    }
+
+    .meme-duo img:last-child {
+      transform: rotate(5deg);
     }
 
     .card {
@@ -178,14 +216,17 @@
     }
 
     .pill.secondary {
-      position: fixed;
+      position: absolute;
       z-index: 20;
-      min-width: 108px;
-      height: 50px;
-      background: rgba(255, 112, 162, 0.72);
-      box-shadow: 0 10px 16px rgba(228, 54, 119, 0.2);
-      font-size: 17px;
-      transition: left 520ms cubic-bezier(.18,.89,.32,1.28), top 520ms cubic-bezier(.18,.89,.32,1.28), transform 180ms ease;
+      min-width: 124px;
+      height: 56px;
+      border: 3px solid #fff;
+      background: linear-gradient(180deg, #302050, #111);
+      box-shadow: 0 13px 20px rgba(40, 13, 33, 0.28), 0 0 0 4px rgba(255, 95, 158, 0.32);
+      font-size: 21px;
+      letter-spacing: 0;
+      animation: noPulse 760ms ease-in-out infinite;
+      transition: left 560ms cubic-bezier(.18,.89,.32,1.28), top 560ms cubic-bezier(.18,.89,.32,1.28), transform 180ms ease;
     }
 
     .pill.disabled {
@@ -249,6 +290,71 @@
       position: relative;
     }
 
+    .hour-strip {
+      display: flex;
+      gap: 10px;
+      margin: 16px -4px 0;
+      padding: 3px 4px 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .hour-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hour-chip {
+      flex: 0 0 auto;
+      width: 64px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.72);
+      font-size: 17px;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12);
+      scroll-snap-align: center;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .hour-chip.selected {
+      background: #fff;
+      color: var(--hot);
+      box-shadow: 0 8px 18px rgba(228, 54, 119, 0.22);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .date-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .date-option {
+      height: 48px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.78);
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.14);
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .date-option.selected {
+      background: #fff;
+      color: var(--hot);
+      transform: translateY(-2px);
+    }
+
+    .date-option:disabled {
+      cursor: not-allowed;
+      opacity: 0.38;
+    }
+
     .food-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -271,6 +377,31 @@
       background: #fff0f7;
       box-shadow: 0 0 0 3px var(--pink), 0 12px 18px rgba(222, 75, 130, 0.22);
       transform: translateY(-4px) rotate(-3deg);
+    }
+
+    .custom-food {
+      width: 100%;
+      height: 54px;
+      margin-top: 12px;
+      padding: 0 18px;
+      border: 2px solid rgba(232, 81, 138, 0.32);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: var(--text);
+      box-shadow: inset 0 2px 0 rgba(255,255,255,0.72);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .custom-food::placeholder {
+      color: rgba(155, 108, 125, 0.48);
+    }
+
+    .custom-food:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(255, 95, 158, 0.16), inset 0 2px 0 rgba(255,255,255,0.72);
     }
 
     .summary {
@@ -349,6 +480,11 @@
       50% { transform: rotate(4deg) translateY(-5px); }
     }
 
+    @keyframes noPulse {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50% { transform: rotate(5deg) scale(1.1); }
+    }
+
     @keyframes fall {
       from { opacity: 0; transform: translate3d(0, -18px, 0) rotate(0deg); }
       15% { opacity: 1; }
@@ -358,6 +494,7 @@
     @media (max-height: 720px) {
       .screen { gap: 12px; padding-top: max(18px, env(safe-area-inset-top)); }
       .meme { width: min(34vw, 124px); height: min(34vw, 124px); font-size: min(21vw, 82px); }
+      .meme-duo { width: min(72vw, 250px); }
       .card { padding: 21px 18px 19px; }
       h1 { font-size: 28px; }
       h2 { font-size: 24px; }
@@ -386,22 +523,26 @@
     <span class="heart" style="left:62%;top:84%;--size:27px;--speed:3.6s;">♥</span>
 
     <section class="screen active" data-screen="ask">
-      <div class="meme" aria-hidden="true">🥺</div>
+      <div class="meme photo" aria-hidden="true">
+        <img src="assets/cat-ask.jpg" alt="">
+      </div>
       <div class="card">
-        <h1>你会跟我吃饭吗？</h1>
+        <h1>要一起吃饭饭吗？</h1>
         <p class="sub">给你一个认真考虑 0.3 秒的机会。</p>
         <div class="actions">
           <button class="pill" id="yesBtn" type="button">Yes 💕</button>
-          <button class="pill secondary" id="noBtn" type="button">No</button>
+          <button class="pill secondary" id="noBtn" type="button">NO</button>
         </div>
       </div>
     </section>
 
     <section class="screen" data-screen="yes">
-      <div class="meme" aria-hidden="true">🙌</div>
+      <div class="meme photo" aria-hidden="true">
+        <img src="assets/cat-yes.jpg" alt="">
+      </div>
       <div class="card">
-        <h2>你居然点了 Yes？</h2>
-        <p class="sub">我本来已经准备好看你点 No 失败了。</p>
+        <h2>没想到你会点yes</h2>
+        <p class="sub">我本来已经准备好看你点 No了。</p>
         <button class="pill" id="nextToDate" type="button">Next 💖</button>
       </div>
     </section>
@@ -411,16 +552,16 @@
         <h2>什么时候集合？</h2>
         <div class="picker-wrap">
           <div class="picker-line"></div>
-          <div class="picker-window" aria-label="7月27日 19:00">
+          <div class="picker-window" id="pickerWindow" aria-label="今天 19:00">
             <div class="picker-col">
-              <span>7月26日</span>
-              <strong>7月27日</strong>
-              <span>7月28日</span>
+              <span>昨天</span>
+              <strong id="pickerDay">今天</strong>
+              <span>明天</span>
             </div>
             <div class="picker-col">
-              <span>18</span>
-              <strong>19</strong>
-              <span>20</span>
+              <span id="prevHour">18</span>
+              <strong id="pickerHour">19</strong>
+              <span id="nextHour">20</span>
             </div>
             <div class="picker-col">
               <span>30</span>
@@ -428,6 +569,19 @@
               <span>30</span>
             </div>
           </div>
+        </div>
+        <div class="hour-strip" id="hourStrip" aria-label="滑动选择几点">
+          <button class="hour-chip" data-hour="17" type="button">17点</button>
+          <button class="hour-chip" data-hour="18" type="button">18点</button>
+          <button class="hour-chip selected" data-hour="19" type="button">19点</button>
+          <button class="hour-chip" data-hour="20" type="button">20点</button>
+          <button class="hour-chip" data-hour="21" type="button">21点</button>
+          <button class="hour-chip" data-hour="22" type="button">22点</button>
+        </div>
+        <div class="date-options">
+          <button class="date-option selected" data-day="今天" type="button">今天</button>
+          <button class="date-option" data-day="明天" type="button">明天</button>
+          <button class="date-option" id="customTimeBtn" type="button" disabled>你定时间</button>
         </div>
         <div class="actions">
           <button class="pill" id="confirmDate" type="button">✓ 就这个</button>
@@ -450,18 +604,22 @@
         </div>
         <div class="actions">
           <button class="pill disabled" id="finishBtn" type="button">Pick one first</button>
+          <input class="custom-food" id="customFoodInput" type="text" maxlength="18" placeholder="或者你想吃什么呢">
         </div>
       </div>
     </section>
 
     <section class="screen" data-screen="done">
-      <div class="meme small" aria-hidden="true">😎</div>
+      <div class="meme-duo" aria-hidden="true">
+        <img src="assets/cat-done-1.jpg" alt="">
+        <img src="assets/cat-done-2.jpg" alt="">
+      </div>
       <div class="card">
         <h2>收到，饭搭子。</h2>
-        <p class="sub">7月27日 19:00，准备好肚子，我来接你。</p>
+        <p class="sub" id="finalLead">准备好肚子，我来接你。</p>
         <div class="summary">
           <div><span>人员</span><span class="mini">你 + 我</span></div>
-          <div><span>时间</span><span class="mini">7月27日 19:00</span></div>
+          <div><span>时间</span><span class="mini" id="finalTime">今天 19:00</span></div>
           <div><span>吃什么</span><span class="mini" id="finalFood">还没选</span></div>
         </div>
       </div>
@@ -476,6 +634,10 @@
       screen: "ask",
       noTimer: null,
       food: "",
+      customFood: "",
+      time: "今天 19:00",
+      day: "今天",
+      hour: 19,
     };
 
     const app = document.getElementById("app");
@@ -485,7 +647,16 @@
     const toast = document.getElementById("toast");
     const fxLayer = document.getElementById("fxLayer");
     const finishBtn = document.getElementById("finishBtn");
+    const customFoodInput = document.getElementById("customFoodInput");
     const finalFood = document.getElementById("finalFood");
+    const finalTime = document.getElementById("finalTime");
+    const finalLead = document.getElementById("finalLead");
+    const pickerWindow = document.getElementById("pickerWindow");
+    const pickerDay = document.getElementById("pickerDay");
+    const pickerHour = document.getElementById("pickerHour");
+    const prevHour = document.getElementById("prevHour");
+    const nextHour = document.getElementById("nextHour");
+    const hourStrip = document.getElementById("hourStrip");
 
     function random(min, max) {
       return Math.random() * (max - min) + min;
@@ -506,17 +677,37 @@
       showToast.timer = setTimeout(() => toast.classList.remove("show"), 1400);
     }
 
+    function formatTime() {
+      state.time = `${state.day} ${String(state.hour).padStart(2, "0")}:00`;
+    }
+
+    function renderPicker() {
+      formatTime();
+      pickerDay.textContent = state.day;
+      pickerHour.textContent = String(state.hour).padStart(2, "0");
+      prevHour.textContent = String(Math.max(0, state.hour - 1)).padStart(2, "0");
+      nextHour.textContent = String(Math.min(23, state.hour + 1)).padStart(2, "0");
+      pickerWindow.setAttribute("aria-label", state.time);
+
+      document.querySelectorAll(".date-option[data-day]").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.day === state.day);
+      });
+      document.querySelectorAll(".hour-chip").forEach((btn) => {
+        btn.classList.toggle("selected", Number(btn.dataset.hour) === state.hour);
+      });
+    }
+
     function moveNo() {
       if (state.screen !== "ask") return;
       const appRect = app.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
-      const margin = 16;
+      const margin = 12;
       const maxLeft = appRect.width - btnRect.width - margin;
       const maxTop = appRect.height - btnRect.height - margin;
       noBtn.style.left = `${random(margin, Math.max(margin, maxLeft))}px`;
-      noBtn.style.top = `${random(88, Math.max(100, maxTop - 40))}px`;
+      noBtn.style.top = `${random(margin, Math.max(margin, maxTop))}px`;
       clearTimeout(state.noTimer);
-      state.noTimer = setTimeout(moveNo, random(520, 820));
+      state.noTimer = setTimeout(moveNo, random(500, 800));
     }
 
     function stopNo() {
@@ -560,7 +751,52 @@
 
     document.getElementById("nextToDate").addEventListener("click", () => go("date"));
     document.getElementById("confirmDate").addEventListener("click", () => go("food"));
-    document.getElementById("resetDate").addEventListener("click", () => showToast("不许重置，就 7月27日。"));
+    document.getElementById("resetDate").addEventListener("click", () => {
+      state.day = "今天";
+      state.hour = 19;
+      renderPicker();
+      showToast("重置成今天，别想太多。");
+    });
+
+    document.querySelectorAll(".date-option[data-day]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.day = btn.dataset.day;
+        renderPicker();
+      });
+    });
+
+    document.querySelectorAll(".hour-chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.hour = Number(btn.dataset.hour);
+        renderPicker();
+        btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      });
+    });
+
+    hourStrip.addEventListener("scroll", () => {
+      clearTimeout(hourStrip.snapTimer);
+      hourStrip.snapTimer = setTimeout(() => {
+        const stripRect = hourStrip.getBoundingClientRect();
+        const center = stripRect.left + stripRect.width / 2;
+        let nearest = null;
+        let distance = Infinity;
+
+        document.querySelectorAll(".hour-chip").forEach((btn) => {
+          const rect = btn.getBoundingClientRect();
+          const btnCenter = rect.left + rect.width / 2;
+          const currentDistance = Math.abs(btnCenter - center);
+          if (currentDistance < distance) {
+            nearest = btn;
+            distance = currentDistance;
+          }
+        });
+
+        if (nearest) {
+          state.hour = Number(nearest.dataset.hour);
+          renderPicker();
+        }
+      }, 120);
+    });
 
     document.querySelectorAll(".food").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -572,12 +808,28 @@
       });
     });
 
+    customFoodInput.addEventListener("input", () => {
+      state.customFood = customFoodInput.value.trim();
+      if (state.customFood) {
+        finishBtn.classList.remove("disabled");
+        finishBtn.textContent = "OK 就吃这个 💅";
+      } else if (!state.food) {
+        finishBtn.classList.add("disabled");
+        finishBtn.textContent = "Pick one first";
+      } else {
+        finishBtn.textContent = "OK 就它 💅";
+      }
+    });
+
     finishBtn.addEventListener("click", () => {
-      if (!state.food) {
+      const pickedFood = state.customFood || state.food;
+      if (!pickedFood) {
         showToast("先点一个吃的。");
         return;
       }
-      finalFood.textContent = state.food;
+      finalFood.textContent = pickedFood;
+      finalTime.textContent = state.time;
+      finalLead.textContent = `${state.time}，准备好肚子，我来接你。`;
       hearts();
       setTimeout(() => go("done"), 430);
     });
@@ -587,6 +839,7 @@
     });
 
     moveNo();
+    renderPicker();
   </script>
 </body>
 </html>
