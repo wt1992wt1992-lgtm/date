@@ -6,22 +6,16 @@
   <title>请问一起吃饭 吗</title>
   <style>
     :root {
-      --bg: #ffe870;
-      --paper: #fff7dc;
-      --primary: #ff4f00;
-      --yes: #ff2f6d;
-      --no: #3730a3;
-      --cyan: #00d7ff;
-      --acid: #dfff00;
-      --ink: #161616;
-      --card: #fffdf2;
-      --text: #191919;
-      --muted: #5a5146;
-      --shadow: 8px 8px 0 #161616;
-      --soft-shadow: 0 18px 38px rgba(22, 22, 22, 0.16);
-      --radius: 24px;
-      --wheel-size: min(320px, calc(100vw - 54px), calc(100dvh - 420px));
-      --label-radius: calc(var(--wheel-size) * 0.255);
+      --bg: #ffe5ef;
+      --bg2: #fff6fa;
+      --pink: #ff5f9e;
+      --hot: #ff2d78;
+      --soft: #ffd6e6;
+      --card: rgba(255, 255, 255, 0.88);
+      --text: #5a3b48;
+      --muted: #9b6c7d;
+      --shadow: 0 18px 34px rgba(222, 75, 130, 0.22);
+      --radius: 26px;
     }
 
     * {
@@ -35,14 +29,9 @@
       min-height: 100%;
       margin: 0;
       overflow: hidden;
-      background: var(--bg);
+      background: #111;
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      min-height: 100dvh;
+      font-family: "Comic Sans MS", "Marker Felt", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
     }
 
     button {
@@ -52,1093 +41,552 @@
       user-select: none;
     }
 
-    .app {
+    .phone {
       position: relative;
       width: 100vw;
       height: 100vh;
       height: 100dvh;
-      max-width: 460px;
+      max-width: 430px;
       margin: 0 auto;
       overflow: hidden;
       background:
-        linear-gradient(135deg, rgba(255, 47, 109, 0.18) 25%, transparent 25%) 0 0 / 28px 28px,
-        radial-gradient(circle at 18% 14%, rgba(0, 215, 255, 0.72) 0 8%, transparent 8.5%),
-        radial-gradient(circle at 92% 20%, rgba(223, 255, 0, 0.82) 0 7%, transparent 7.5%),
-        radial-gradient(circle at 12% 88%, rgba(255, 47, 109, 0.58) 0 10%, transparent 10.5%),
-        var(--bg);
-      box-shadow: 0 0 0 4px var(--ink), 18px 18px 0 rgba(22, 22, 22, 0.14);
+        radial-gradient(circle at 20% 16%, rgba(255, 111, 164, 0.22) 0 9%, transparent 9.5%),
+        radial-gradient(circle at 82% 24%, rgba(255, 95, 158, 0.18) 0 7%, transparent 7.5%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      isolation: isolate;
     }
 
-    .app::before,
-    .app::after {
+    .phone::before {
       content: "";
       position: absolute;
+      inset: 0;
       z-index: 0;
+      background-image:
+        radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.7), transparent 42%),
+        repeating-radial-gradient(circle at 50% 48%, rgba(255, 79, 140, 0.08) 0 2px, transparent 2px 7px);
+      opacity: 0.7;
       pointer-events: none;
     }
 
-    .app::before {
-      inset: 0;
-      opacity: 0.18;
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 12px 12px;
-      mix-blend-mode: multiply;
-    }
-
-    .app::after {
-      right: -42px;
-      bottom: 74px;
-      width: 168px;
-      height: 168px;
-      border: 4px solid var(--ink);
-      border-radius: 50%;
-      background: repeating-linear-gradient(-45deg, var(--cyan) 0 10px, transparent 10px 20px);
-      transform: rotate(12deg);
+    .heart {
+      position: absolute;
+      z-index: 1;
+      color: rgba(236, 63, 125, 0.48);
+      font-size: var(--size);
+      animation: floatHeart var(--speed) ease-in-out infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 5px 8px rgba(236, 63, 125, 0.12));
     }
 
     .screen {
       position: absolute;
       inset: 0;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: max(58px, calc(env(safe-area-inset-top) + 34px)) 22px max(24px, env(safe-area-inset-bottom));
+      justify-content: center;
+      gap: 18px;
+      padding: max(28px, env(safe-area-inset-top)) 22px max(24px, env(safe-area-inset-bottom));
       opacity: 0;
+      transform: translateY(18px) scale(0.98);
       pointer-events: none;
-      transform: translateX(38px) scale(0.98);
-      transition: opacity 420ms ease, transform 420ms cubic-bezier(.2,.9,.2,1);
-      z-index: 1;
+      transition: opacity 360ms ease, transform 360ms cubic-bezier(.2,.85,.2,1);
     }
 
     .screen.active {
       opacity: 1;
+      transform: translateY(0) scale(1);
       pointer-events: auto;
-      transform: translateX(0) scale(1);
     }
 
-    .screen.exit-left {
-      opacity: 0;
-      transform: translateX(-42px) scale(0.98);
+    .meme {
+      display: grid;
+      place-items: center;
+      width: min(44vw, 172px);
+      height: min(44vw, 172px);
+      margin-bottom: -4px;
+      border-radius: 40% 60% 48% 52% / 48% 45% 55% 52%;
+      background: rgba(255, 255, 255, 0.45);
+      filter: drop-shadow(0 15px 18px rgba(222, 75, 130, 0.16));
+      font-size: min(26vw, 104px);
+      animation: wiggle 1.7s ease-in-out infinite;
     }
 
-    .top-pill {
-      align-self: flex-start;
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 7px 13px;
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      background: var(--acid);
-      box-shadow: 4px 4px 0 var(--ink);
-      color: var(--ink);
-      font-size: 13px;
-      font-weight: 1000;
-      transform: rotate(-2deg);
+    .meme.small {
+      width: min(35vw, 136px);
+      height: min(35vw, 136px);
+      font-size: min(21vw, 84px);
+      margin-bottom: 0;
     }
 
-    h1 {
-      width: 100%;
-      margin: 34px 0 0;
-      font-size: 40px;
-      line-height: 1.05;
-      letter-spacing: 0;
-      text-align: left;
-      text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(22, 22, 22, 0.16);
+    .card {
+      width: min(100%, 350px);
+      padding: 27px 22px 24px;
+      border: 3px solid rgba(232, 81, 138, 0.78);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow), 0 4px 0 rgba(232, 81, 138, 0.35);
+      text-align: center;
+      backdrop-filter: blur(8px);
     }
 
-    .title-line {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 34px 0 0;
-    }
-
-    .title-line h1 {
-      width: auto;
+    h1,
+    h2 {
       margin: 0;
-      flex: 1;
+      color: var(--text);
+      font-size: clamp(28px, 8vw, 38px);
+      line-height: 1.13;
+      letter-spacing: 0;
+      text-wrap: balance;
     }
 
-    .date-icon {
-      flex: 0 0 auto;
-      width: 68px;
-      height: 68px;
-      border: 4px solid var(--ink);
-      border-radius: 16px;
-      background: var(--paper);
-      box-shadow: 5px 5px 0 var(--ink);
-      color: var(--ink);
-      overflow: hidden;
-      transform: rotate(5deg);
+    h2 {
+      font-size: clamp(24px, 7vw, 32px);
     }
 
-    .date-icon span {
-      display: grid;
-      place-items: center;
-      height: 22px;
-      background: var(--yes);
-      color: #fffdf2;
-      font-size: 13px;
-      font-weight: 1000;
-    }
-
-    .date-icon strong {
-      display: grid;
-      place-items: center;
-      height: 42px;
-      font-size: 24px;
-      line-height: 1;
-      font-weight: 1000;
-    }
-
-    .lead {
-      width: 100%;
-      margin: 18px 0 0;
-      padding: 16px 16px;
-      border: 3px solid var(--ink);
-      border-radius: 20px;
-      background: var(--paper);
-      box-shadow: 6px 6px 0 var(--ink);
-      color: var(--ink);
-      font-size: 18px;
-      line-height: 1.48;
-      font-weight: 900;
-      transform: rotate(1deg);
-    }
-
-    .tiny {
-      margin-top: auto;
-      margin-bottom: 96px;
-      padding: 8px 12px;
-      border: 2px dashed var(--ink);
-      border-radius: 999px;
-      background: rgba(255, 253, 242, 0.82);
-      color: var(--ink);
-      font-size: 15px;
-      font-weight: 1000;
-      transform: rotate(-3deg);
-    }
-
-    .yes-btn {
-      position: absolute;
-      left: 50%;
-      bottom: 116px;
-      z-index: 5;
-      width: min(78vw, 320px);
-      height: 60px;
-      border-radius: var(--radius);
-      background: var(--yes);
-      border: 4px solid var(--ink);
-      color: #fffdf2;
-      box-shadow: var(--shadow);
-      font-size: 22px;
-      font-weight: 900;
-      transform: translateX(-50%) rotate(-1.5deg);
-      transition: transform 240ms ease, width 240ms ease, box-shadow 240ms ease, filter 180ms ease;
-    }
-
-    .yes-btn::before {
-      content: "别装了";
-      position: absolute;
-      top: -24px;
-      right: 18px;
-      padding: 4px 9px;
-      border: 2px solid var(--ink);
-      border-radius: 999px;
-      background: var(--cyan);
-      color: var(--ink);
-      box-shadow: 3px 3px 0 var(--ink);
-      font-size: 12px;
-      font-weight: 1000;
-      transform: rotate(7deg);
-    }
-
-    .yes-btn.bump {
-      animation: bounce 520ms cubic-bezier(.2,.9,.2,1);
-    }
-
-    .yes-btn.grow-1 { width: min(82vw, 340px); }
-    .yes-btn.grow-2 { width: min(88vw, 370px); font-size: 23px; }
-    .yes-btn.grow-3 { width: min(92vw, 392px); font-size: 22px; }
-
-    .no-btn {
-      position: absolute;
-      z-index: 8;
-      min-width: 148px;
-      height: 52px;
-      padding: 0 18px;
-      border: 3px solid var(--ink);
-      border-radius: 14px;
-      background: var(--no);
-      color: #fff;
-      box-shadow: 5px 5px 0 var(--ink);
+    .sub {
+      margin: 13px 0 0;
+      color: var(--muted);
       font-size: 16px;
-      font-weight: 900;
-      white-space: nowrap;
-      transition: left 520ms cubic-bezier(.18,.89,.32,1.28), top 520ms cubic-bezier(.18,.89,.32,1.28), transform 180ms ease;
+      line-height: 1.45;
+      font-weight: 700;
     }
 
-    .no-btn:active {
-      transform: scale(0.92) rotate(-4deg);
-    }
-
-    .panel {
-      width: 100%;
-      margin-top: 28px;
-      padding: 22px;
-      border-radius: var(--radius);
-      border: 4px solid var(--ink);
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      transform: rotate(-1deg);
-    }
-
-    .wheel-wrap {
+    .actions {
       position: relative;
-      width: var(--wheel-size);
-      height: var(--wheel-size);
-      max-width: calc(100vw - 44px);
-      max-height: calc(100vw - 44px);
-      margin: 30px auto 0;
-      aspect-ratio: 1;
+      min-height: 80px;
+      margin-top: 22px;
     }
 
-    .pointer {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      z-index: 3;
-      width: 0;
-      height: 0;
-      border-left: 18px solid transparent;
-      border-right: 18px solid transparent;
-      border-top: 38px solid var(--yes);
-      filter: drop-shadow(4px 5px 0 var(--ink));
-      transform: translateX(-50%);
-    }
-
-    .wheel-badge {
-      position: absolute;
-      left: 50%;
-      top: 34px;
-      z-index: 4;
-      min-width: 126px;
-      padding: 8px 12px;
-      border: 3px solid var(--ink);
+    .pill {
+      min-width: 132px;
+      height: 58px;
+      padding: 0 24px;
       border-radius: 999px;
-      background: var(--acid);
-      box-shadow: 4px 4px 0 var(--ink);
-      color: var(--ink);
-      font-size: 15px;
-      font-weight: 1000;
-      text-align: center;
-      transform: translateX(-50%) rotate(-3deg) scale(0.88);
-      opacity: 0;
-      transition: opacity 220ms ease, transform 220ms ease;
-      pointer-events: none;
-    }
-
-    .wheel-badge.show {
-      opacity: 1;
-      transform: translateX(-50%) rotate(-3deg) scale(1);
-    }
-
-    .wheel {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, #fff 0 19%, transparent 20%),
-        conic-gradient(
-          #ff2f6d 0deg 51.43deg,
-          #dfff00 51.43deg 102.86deg,
-          #00d7ff 102.86deg 154.29deg,
-          #3730a3 154.29deg 205.72deg,
-          #ff4f00 205.72deg 257.15deg,
-          #fff7dc 257.15deg 308.58deg,
-          #9b5cff 308.58deg 360deg
-        );
-      border: 5px solid var(--ink);
-      box-shadow: inset 0 0 0 9px #fffdf2, 9px 12px 0 var(--ink), var(--soft-shadow);
-      transition: transform 6.4s cubic-bezier(.08,.74,.09,1);
-      will-change: transform;
-    }
-
-    .wheel::after {
-      content: attr(data-center);
-      display: grid;
-      place-items: center;
-      min-width: 82px;
-      max-width: 132px;
-      width: auto;
-      height: 82px;
-      padding: 0 12px;
-      border-radius: 50%;
-      background: #fff;
-      border: 4px solid var(--ink);
-      color: var(--yes);
-      box-shadow: 4px 4px 0 var(--ink);
-      font-size: clamp(18px, 7vw, 34px);
-      font-weight: 1000;
-      text-align: center;
-      line-height: 1.05;
-    }
-
-    .wheel-label {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 118px;
-      height: 26px;
-      margin-left: -59px;
-      margin-top: -13px;
+      background: linear-gradient(180deg, #ff78b1, var(--hot));
       color: #fff;
-      font-size: 14px;
-      font-weight: 1000;
-      text-align: right;
-      text-shadow: 2px 2px 0 var(--ink), -1px -1px 0 var(--ink);
-      transform-origin: 59px 13px;
-      pointer-events: none;
-    }
-
-    .result {
-      min-height: 68px;
-      margin: 22px 0 0;
-      text-align: center;
-      font-size: 18px;
+      box-shadow: 0 12px 20px rgba(228, 54, 119, 0.28), inset 0 2px 0 rgba(255,255,255,0.38);
+      font-size: 20px;
       font-weight: 900;
-      color: var(--ink);
-    }
-
-    .result strong {
-      display: block;
-      margin-top: 8px;
-      color: var(--yes);
-      font-size: 28px;
-      text-shadow: 2px 2px 0 #fffdf2, 4px 4px 0 var(--ink);
-    }
-
-    .primary-btn,
-    .choice-btn {
-      width: 100%;
-      height: 60px;
-      border-radius: var(--radius);
-      background: var(--primary);
-      border: 4px solid var(--ink);
-      color: #fffdf2;
-      box-shadow: var(--shadow);
-      font-size: 19px;
-      font-weight: 1000;
       transition: transform 180ms ease, filter 180ms ease;
     }
 
-    .primary-btn:active,
-    .choice-btn:active {
-      transform: scale(0.96);
+    .pill:active {
+      transform: scale(0.95);
       filter: brightness(0.98);
     }
 
-    .primary-btn:disabled {
-      opacity: 0.62;
-      cursor: default;
+    .pill.secondary {
+      position: fixed;
+      z-index: 20;
+      min-width: 108px;
+      height: 50px;
+      background: rgba(255, 112, 162, 0.72);
+      box-shadow: 0 10px 16px rgba(228, 54, 119, 0.2);
+      font-size: 17px;
+      transition: left 520ms cubic-bezier(.18,.89,.32,1.28), top 520ms cubic-bezier(.18,.89,.32,1.28), transform 180ms ease;
     }
 
-    .choice-list {
-      width: 100%;
-      display: grid;
-      gap: 14px;
-      margin-top: 34px;
+    .pill.disabled {
+      opacity: 0.48;
+      filter: grayscale(0.2);
     }
 
-    .choice-btn {
-      background: #fff;
-      color: var(--text);
-      box-shadow: var(--shadow);
-      text-align: left;
-      padding: 0 22px;
-      border: 4px solid var(--ink);
-      transform: rotate(-1deg);
-    }
-
-    .choice-btn.hot {
-      background: var(--yes);
-      color: #fffdf2;
-    }
-
-    .choice-btn:nth-child(2) {
-      background: var(--cyan);
-      color: var(--ink);
-      transform: rotate(1.2deg);
-    }
-
-    .choice-btn:nth-child(3) {
-      background: var(--paper);
-      color: var(--ink);
-      transform: rotate(-2deg);
-    }
-
-    .success-card {
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      margin-top: 30px;
-      padding: 26px 22px;
+    .date-picker {
+      width: min(100%, 360px);
+      padding: 22px 18px;
       border-radius: 28px;
-      border: 5px solid var(--ink);
-      background: var(--card);
-      box-shadow: var(--shadow);
-      animation: fadeUp 560ms ease both;
-      transform: rotate(-1deg);
+      background: rgba(82, 68, 78, 0.56);
+      box-shadow: 0 20px 38px rgba(80, 45, 61, 0.28);
+      color: #fff;
+      backdrop-filter: blur(18px);
     }
 
-    .success-card h2 {
-      margin: 0 0 18px;
-      font-size: 28px;
-      line-height: 1.2;
-      text-shadow: 2px 2px 0 var(--acid);
+    .date-picker h2 {
+      color: #fff;
+      margin-bottom: 18px;
     }
 
-    .success-card p {
-      margin: 0 0 18px;
-      color: #4d4641;
-      font-size: 18px;
-      line-height: 1.45;
-      font-weight: 900;
-    }
-
-    .record {
+    .picker-window {
       display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.8fr;
       gap: 12px;
-      margin: 20px 0;
+      height: 170px;
+      align-items: center;
+      overflow: hidden;
+      mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
     }
 
-    .record-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 2px dashed rgba(22, 22, 22, 0.34);
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .record-row span:last-child {
-      max-width: 54%;
-      text-align: right;
-      color: var(--yes);
-    }
-
-    .card-foot {
-      margin-top: 22px;
-      padding: 8px 10px;
-      border: 2px solid var(--ink);
-      border-radius: 999px;
-      background: var(--acid);
-      color: var(--ink);
+    .picker-col {
+      display: grid;
+      gap: 15px;
+      color: rgba(255,255,255,0.42);
+      font-size: 24px;
+      font-weight: 800;
       text-align: center;
-      font-size: 13px;
-      font-weight: 1000;
     }
 
-    .modal {
+    .picker-col strong {
+      color: #fff;
+      font-size: 34px;
+      text-shadow: 0 2px 10px rgba(255,255,255,0.25);
+    }
+
+    .picker-line {
       position: absolute;
-      inset: 0;
-      z-index: 30;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 46px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .picker-wrap {
+      position: relative;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .food {
       display: grid;
       place-items: center;
-      padding: 28px;
-      background: rgba(22, 22, 22, 0.42);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 260ms ease;
+      height: 74px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 9px 16px rgba(222, 75, 130, 0.18), inset 0 -3px 0 rgba(232, 81, 138, 0.1);
+      font-size: 34px;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
-    .modal.show {
-      opacity: 1;
-      pointer-events: auto;
+    .food.selected {
+      background: #fff0f7;
+      box-shadow: 0 0 0 3px var(--pink), 0 12px 18px rgba(222, 75, 130, 0.22);
+      transform: translateY(-4px) rotate(-3deg);
     }
 
-    .modal-card {
-      width: 100%;
-      padding: 26px 22px;
-      border-radius: var(--radius);
-      border: 5px solid var(--ink);
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      text-align: center;
-      transform: scale(0.9);
-      transition: transform 260ms cubic-bezier(.2,.9,.2,1);
-    }
-
-    .modal.show .modal-card {
-      transform: scale(1);
-    }
-
-    .modal-card h2 {
-      margin: 0 0 12px;
-      font-size: 25px;
-    }
-
-    .modal-card p {
-      margin: 0;
-      color: #4d4641;
-      font-size: 18px;
-      line-height: 1.45;
+    .summary {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      font-size: 16px;
       font-weight: 800;
+      color: var(--text);
+    }
+
+    .summary div {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .mini {
+      display: inline-grid;
+      place-items: center;
+      min-width: 82px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: #fff0f7;
+      color: var(--hot);
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      bottom: max(28px, env(safe-area-inset-bottom));
+      z-index: 30;
+      width: min(86vw, 330px);
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+      color: var(--hot);
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      opacity: 0;
+      transform: translateX(-50%) translateY(18px);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .fx-layer {
       position: absolute;
       inset: 0;
       z-index: 25;
+      pointer-events: none;
       overflow: hidden;
-      pointer-events: none;
     }
 
-    .fall-emoji,
-    .confetti {
+    .fall {
       position: absolute;
-      top: -38px;
-      animation: fall 1400ms cubic-bezier(.14,.62,.56,1) forwards;
-      will-change: transform, opacity;
+      top: -40px;
+      animation: fall 1500ms ease-in forwards;
+      font-size: 27px;
     }
 
-    .fall-emoji {
-      font-size: 28px;
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) rotate(-6deg) scale(1); opacity: 0.48; }
+      50% { transform: translateY(-18px) rotate(8deg) scale(1.1); opacity: 0.78; }
     }
 
-    .confetti {
-      width: 9px;
-      height: 16px;
-      border-radius: 4px;
-    }
-
-    .shake {
-      animation: pageShake 360ms ease;
-    }
-
-    .fake-phone-bar {
-      position: absolute;
-      top: max(8px, env(safe-area-inset-top));
-      left: 50%;
-      z-index: 4;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: calc(100% - 34px);
-      max-width: 412px;
-      height: 28px;
-      padding: 0 12px;
-      border: 2px solid var(--ink);
-      border-radius: 999px;
-      background: rgba(255, 253, 242, 0.76);
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 1000;
-      transform: translateX(-50%);
-      backdrop-filter: blur(6px);
-    }
-
-    .sticker {
-      position: absolute;
-      z-index: 2;
-      display: inline-grid;
-      place-items: center;
-      min-width: 72px;
-      min-height: 38px;
-      padding: 7px 12px;
-      border: 3px solid var(--ink);
-      border-radius: 16px;
-      background: #fffdf2;
-      box-shadow: 5px 5px 0 var(--ink);
-      color: var(--ink);
-      font-size: 14px;
-      font-weight: 1000;
-      pointer-events: none;
-    }
-
-    .sticker.one {
-      top: 156px;
-      right: 18px;
-      background: var(--cyan);
-      transform: rotate(9deg);
-    }
-
-    .sticker.two {
-      left: 18px;
-      bottom: 210px;
-      background: var(--acid);
-      transform: rotate(-8deg);
-    }
-
-    .stamp {
-      position: absolute;
-      right: 22px;
-      top: 136px;
-      z-index: 4;
-      width: 92px;
-      height: 92px;
-      display: grid;
-      place-items: center;
-      border: 5px solid var(--yes);
-      border-radius: 50%;
-      color: var(--yes);
-      background: rgba(255, 253, 242, 0.8);
-      font-size: 17px;
-      font-weight: 1000;
-      transform: rotate(16deg);
-      opacity: 0.58;
-    }
-
-    .tape {
-      position: absolute;
-      z-index: 3;
-      width: 86px;
-      height: 26px;
-      border: 2px solid rgba(22, 22, 22, 0.32);
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.35) 0 8px, transparent 8px 16px),
-        rgba(255, 255, 255, 0.56);
-      transform: rotate(-8deg);
-      pointer-events: none;
-    }
-
-    .tape.top {
-      top: 132px;
-      left: 36px;
-    }
-
-    .tape.card {
-      top: 106px;
-      left: 50%;
-      transform: translateX(-50%) rotate(4deg);
-    }
-
-    .warning-strip {
-      position: absolute;
-      left: -28px;
-      right: -28px;
-      bottom: 24px;
-      z-index: 0;
-      height: 42px;
-      border-block: 3px solid var(--ink);
-      background: repeating-linear-gradient(45deg, var(--ink) 0 14px, var(--acid) 14px 28px);
-      transform: rotate(-5deg);
-      opacity: 0.9;
-    }
-
-    .choice-list .choice-btn:focus-visible,
-    .primary-btn:focus-visible,
-    .yes-btn:focus-visible,
-    .no-btn:focus-visible {
-      outline: 4px solid var(--cyan);
-      outline-offset: 4px;
-    }
-
-    @keyframes bounce {
-      0% { transform: translateX(-50%) rotate(-1.5deg) scale(1); }
-      36% { transform: translateX(-50%) rotate(2deg) scale(1.12); }
-      58% { transform: translateX(-50%) rotate(-4deg) scale(0.97); }
-      78% { transform: translateX(-50%) rotate(2deg) scale(1.04); }
-      100% { transform: translateX(-50%) rotate(-1.5deg) scale(1); }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg) translateY(0); }
+      50% { transform: rotate(4deg) translateY(-5px); }
     }
 
     @keyframes fall {
-      0% {
-        opacity: 0;
-        transform: translate3d(0, -20px, 0) rotate(0deg) scale(0.9);
-      }
-      12% { opacity: 1; }
-      100% {
-        opacity: 0;
-        transform: translate3d(var(--drift), 112vh, 0) rotate(var(--spin)) scale(1.08);
-      }
-    }
-
-    @keyframes pageShake {
-      0%, 100% { transform: translate3d(0, 0, 0); }
-      15% { transform: translate3d(-5px, 2px, 0); }
-      30% { transform: translate3d(5px, -2px, 0); }
-      45% { transform: translate3d(-4px, -2px, 0); }
-      60% { transform: translate3d(4px, 2px, 0); }
-      75% { transform: translate3d(-2px, 1px, 0); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    @media (min-width: 700px) {
-      body {
-        display: grid;
-        place-items: center;
-        background: #f4ebe5;
-      }
-
-      .app {
-        height: min(860px, 100vh);
-        border-radius: 32px;
-      }
+      from { opacity: 0; transform: translate3d(0, -18px, 0) rotate(0deg); }
+      15% { opacity: 1; }
+      to { opacity: 0; transform: translate3d(var(--drift), 105vh, 0) rotate(var(--spin)); }
     }
 
     @media (max-height: 720px) {
-      :root {
-        --wheel-size: min(286px, calc(100vw - 58px), calc(100dvh - 430px));
-      }
+      .screen { gap: 12px; padding-top: max(18px, env(safe-area-inset-top)); }
+      .meme { width: min(34vw, 124px); height: min(34vw, 124px); font-size: min(21vw, 82px); }
+      .card { padding: 21px 18px 19px; }
+      h1 { font-size: 28px; }
+      h2 { font-size: 24px; }
+      .sub { font-size: 14px; }
+      .picker-window { height: 138px; }
+      .food { height: 62px; font-size: 30px; }
+    }
 
-      .screen {
-        padding-top: max(48px, calc(env(safe-area-inset-top) + 30px));
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
-
-      h1 { margin-top: 16px; font-size: 29px; }
-      .title-line { margin-top: 16px; }
-      .lead { font-size: 17px; }
-      .tiny { margin-bottom: 86px; }
-      .wheel-wrap { margin-top: 14px; }
-      .result { min-height: 54px; margin-top: 10px; }
-      .panel { margin-top: 16px; padding: 16px; }
-      .top-pill { min-height: 30px; font-size: 12px; }
     }
   </style>
 </head>
 <body>
-  <main class="app" id="app">
-    <div class="fake-phone-bar" aria-hidden="true">
-      <span>19:08</span>
-      <span>约饭系统已联网</span>
-      <span>98%</span>
-    </div>
-    <section class="screen active" data-screen="intro">
-      <div class="warning-strip" aria-hidden="true"></div>
-      <span class="sticker one">逃不掉</span>
-      <span class="sticker two">说no试试呢</span>
-      <div class="top-pill">强制约饭模拟器 v2.0</div>
-      <h1>🚨 请问一起吃饭&nbsp;&nbsp;吗</h1>
-      <p class="lead">恭喜你获得与我觅食机会一次<br>系统建议：少挣扎，快点认领饭票。</p>
-      <div class="tiny">👇 请选择（其实没得选）</div>
-      <button class="yes-btn" id="yesBtn" type="button">😍 YES！！</button>
-      <button class="no-btn" id="noBtn" type="button">🙅 NO</button>
-    </section>
+  <main class="phone" id="app">
+    <span class="heart" style="left:9%;top:11%;--size:31px;--speed:3.4s;">♥</span>
+    <span class="heart" style="left:70%;top:8%;--size:24px;--speed:4.2s;">♥</span>
+    <span class="heart" style="left:83%;top:22%;--size:34px;--speed:3.8s;">♥</span>
+    <span class="heart" style="left:14%;top:39%;--size:26px;--speed:4.6s;">♥</span>
+    <span class="heart" style="left:75%;top:54%;--size:24px;--speed:3.1s;">♥</span>
+    <span class="heart" style="left:20%;top:76%;--size:39px;--speed:4s;">♥</span>
+    <span class="heart" style="left:62%;top:84%;--size:27px;--speed:3.6s;">♥</span>
 
-    <section class="screen" data-screen="wheel">
-      <div class="top-pill">胃，你说</div>
-      <h1>🍴 今天吃什么</h1>
-      <div class="wheel-wrap">
-        <div class="pointer"></div>
-        <div class="wheel-badge" id="wheelBadge" aria-live="polite"></div>
-        <div class="wheel" id="wheel"></div>
-      </div>
-      <div class="result" id="foodResult"></div>
-      <div class="panel">
-        <button class="primary-btn" id="spinBtn" type="button">🎯 开始转</button>
-        <button class="primary-btn" id="nextFoodBtn" type="button" hidden>➡️ 然后就</button>
-      </div>
-    </section>
-
-    <section class="screen" data-screen="time">
-      <span class="tape top" aria-hidden="true"></span>
-      <div class="title-line">
-        <h1>什么时候吃</h1>
-        <div class="date-icon" aria-label="7月27日">
-          <span>7月</span>
-          <strong>27</strong>
+    <section class="screen active" data-screen="ask">
+      <div class="meme" aria-hidden="true">🥺</div>
+      <div class="card">
+        <h1>你会跟我吃饭吗？</h1>
+        <p class="sub">给你一个认真考虑 0.3 秒的机会。</p>
+        <div class="actions">
+          <button class="pill" id="yesBtn" type="button">Yes 💕</button>
+          <button class="pill secondary" id="noBtn" type="button">No</button>
         </div>
       </div>
-      <p class="lead">选一个日子暂停减肥计划</p>
-      <div class="choice-list">
-        <button class="choice-btn hot" data-time="今天晚上" type="button">🌙 今天晚上</button>
-        <button class="choice-btn hot" data-time="明天晚上" type="button">🌞 明天晚上</button>
-        <button class="choice-btn" id="lazyTimeBtn" type="button">😏 你说时间我安排</button>
+    </section>
+
+    <section class="screen" data-screen="yes">
+      <div class="meme" aria-hidden="true">🙌</div>
+      <div class="card">
+        <h2>你居然点了 Yes？</h2>
+        <p class="sub">我本来已经准备好看你点 No 失败了。</p>
+        <button class="pill" id="nextToDate" type="button">Next 💖</button>
       </div>
     </section>
 
-    <section class="screen" data-screen="success">
-      <span class="tape card" aria-hidden="true"></span>
-      <span class="stamp" aria-hidden="true">锁定</span>
-      <div class="top-pill">本次约饭不可撤回</div>
-      <div class="success-card">
-        <h2>🎉 已记录成功</h2>
-        <p>约饭成功。</p>
-        <div class="record">
-          <div class="record-row"><span>👥 人员：</span><span>你 + 我</span></div>
-          <div class="record-row"><span>🍴 吃什么：</span><span id="finalFood">等待转盘</span></div>
-          <div class="record-row"><span>🕒 时间：</span><span id="finalTime">等待选择</span></div>
-          <div class="record-row"><span>⚠️ 温馨提示：</span><span>减肥计划搁置一天。</span></div>
+    <section class="screen" data-screen="date">
+      <div class="date-picker">
+        <h2>什么时候集合？</h2>
+        <div class="picker-wrap">
+          <div class="picker-line"></div>
+          <div class="picker-window" aria-label="7月27日 19:00">
+            <div class="picker-col">
+              <span>7月26日</span>
+              <strong>7月27日</strong>
+              <span>7月28日</span>
+            </div>
+            <div class="picker-col">
+              <span>18</span>
+              <strong>19</strong>
+              <span>20</span>
+            </div>
+            <div class="picker-col">
+              <span>30</span>
+              <strong>00</strong>
+              <span>30</span>
+            </div>
+          </div>
         </div>
-        <div class="card-foot">系统已锁定本次约饭。</div>
+        <div class="actions">
+          <button class="pill" id="confirmDate" type="button">✓ 就这个</button>
+          <button class="pill disabled" id="resetDate" type="button">Reset</button>
+        </div>
       </div>
     </section>
 
-    <div class="modal" id="modal">
-      <div class="modal-card">
-        <h2>🚨 系统通知</h2>
-        <p>你思考太久了。<br>默认你已经答应。</p>
+    <section class="screen" data-screen="food">
+      <div class="card">
+        <h2>想吃点什么？😉</h2>
+        <p class="sub">先随便点一个，反正最后还是我安排。</p>
+        <div class="food-grid" id="foodGrid">
+          <button class="food" data-food="🍲 火锅" type="button">🍲</button>
+          <button class="food" data-food="🥩 烤肉" type="button">🥩</button>
+          <button class="food" data-food="🍣 日料" type="button">🍣</button>
+          <button class="food" data-food="🍗 韩料" type="button">🍗</button>
+          <button class="food" data-food="🦞 小龙虾" type="button">🦞</button>
+          <button class="food" data-food="🍖 烧烤" type="button">🍖</button>
+        </div>
+        <div class="actions">
+          <button class="pill disabled" id="finishBtn" type="button">Pick one first</button>
+        </div>
       </div>
-    </div>
+    </section>
 
+    <section class="screen" data-screen="done">
+      <div class="meme small" aria-hidden="true">😎</div>
+      <div class="card">
+        <h2>收到，饭搭子。</h2>
+        <p class="sub">7月27日 19:00，准备好肚子，我来接你。</p>
+        <div class="summary">
+          <div><span>人员</span><span class="mini">你 + 我</span></div>
+          <div><span>时间</span><span class="mini">7月27日 19:00</span></div>
+          <div><span>吃什么</span><span class="mini" id="finalFood">还没选</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast"></div>
     <div class="fx-layer" id="fxLayer"></div>
   </main>
 
   <script>
     const state = {
-      screen: "intro",
-      yesLevel: 0,
-      noMoveTimer: null,
-      introTimer: null,
-      modalTimer: null,
-      spinning: false,
-      currentRotation: 0,
+      screen: "ask",
+      noTimer: null,
       food: "",
-      time: "",
-      lazyTimeClicks: 0,
     };
-
-    const foods = ["🍲 火锅", "🥩 烤肉", "🍣 日料", "🍗 韩料", "🦞 小龙虾", "🍖 烧烤", "✨ 神秘选项"];
-    const lazyTexts = ["😏 想得美", "😏 再选一次", "😏 快选前两个", "😏 不许偷懒"];
 
     const app = document.getElementById("app");
     const screens = [...document.querySelectorAll(".screen")];
-    const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
-    const modal = document.getElementById("modal");
+    const yesBtn = document.getElementById("yesBtn");
+    const toast = document.getElementById("toast");
     const fxLayer = document.getElementById("fxLayer");
-    const wheel = document.getElementById("wheel");
-    const wheelBadge = document.getElementById("wheelBadge");
-    const foodResult = document.getElementById("foodResult");
-    const spinBtn = document.getElementById("spinBtn");
-    const nextFoodBtn = document.getElementById("nextFoodBtn");
-    const lazyTimeBtn = document.getElementById("lazyTimeBtn");
+    const finishBtn = document.getElementById("finishBtn");
     const finalFood = document.getElementById("finalFood");
-    const finalTime = document.getElementById("finalTime");
 
     function random(min, max) {
       return Math.random() * (max - min) + min;
     }
 
-    function switchScreen(next) {
-      const current = screens.find((screen) => screen.classList.contains("active"));
-      const target = screens.find((screen) => screen.dataset.screen === next);
-      if (!target || state.screen === next) return;
-
+    function go(next) {
       state.screen = next;
-      clearIntroTimers();
-      stopNoButton();
-
-      current.classList.add("exit-left");
-      current.classList.remove("active");
-
-      setTimeout(() => {
-        screens.forEach((screen) => screen.classList.remove("exit-left", "active"));
-        target.classList.add("active");
-        if (next === "success") renderSuccess();
-      }, 120);
+      screens.forEach((screen) => {
+        screen.classList.toggle("active", screen.dataset.screen === next);
+      });
+      if (next !== "ask") stopNo();
     }
 
-    function startIntroTimers() {
-      moveNoButton();
-      state.introTimer = setTimeout(() => {
-        modal.classList.add("show");
-        state.modalTimer = setTimeout(() => {
-          modal.classList.remove("show");
-          acceptDinner();
-        }, 3000);
-      }, 15000);
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1400);
     }
 
-    function clearIntroTimers() {
-      clearTimeout(state.introTimer);
-      clearTimeout(state.modalTimer);
-      state.introTimer = null;
-      state.modalTimer = null;
-      modal.classList.remove("show");
-    }
-
-    function stopNoButton() {
-      clearTimeout(state.noMoveTimer);
-      state.noMoveTimer = null;
-    }
-
-    function moveNoButton() {
-      if (state.screen !== "intro") return;
+    function moveNo() {
+      if (state.screen !== "ask") return;
       const appRect = app.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
-      const margin = 12;
+      const margin = 16;
       const maxLeft = appRect.width - btnRect.width - margin;
       const maxTop = appRect.height - btnRect.height - margin;
-      const avoidBottom = Math.max(86, appRect.height * 0.12);
-
-      const left = random(margin, Math.max(margin, maxLeft));
-      const top = random(110, Math.max(130, maxTop - avoidBottom));
-
-      noBtn.style.left = `${left}px`;
-      noBtn.style.top = `${top}px`;
-
-      clearTimeout(state.noMoveTimer);
-      state.noMoveTimer = setTimeout(moveNoButton, random(500, 800));
+      noBtn.style.left = `${random(margin, Math.max(margin, maxLeft))}px`;
+      noBtn.style.top = `${random(88, Math.max(100, maxTop - 40))}px`;
+      clearTimeout(state.noTimer);
+      state.noTimer = setTimeout(moveNo, random(520, 820));
     }
 
-    function punishNoClick(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      state.yesLevel = Math.min(state.yesLevel + 1, 3);
-      yesBtn.classList.remove("grow-1", "grow-2", "grow-3", "bump");
-      yesBtn.classList.add(`grow-${state.yesLevel}`);
-      yesBtn.textContent = state.yesLevel === 1
-        ? "😍 YES！！"
-        : state.yesLevel === 2
-          ? "YES！！！🥹"
-          : "你已经答应了😎";
-      requestAnimationFrame(() => yesBtn.classList.add("bump"));
-      moveNoButton();
+    function stopNo() {
+      clearTimeout(state.noTimer);
+      state.noTimer = null;
     }
 
-    function acceptDinner() {
-      clearIntroTimers();
-      stopNoButton();
-      yesBtn.classList.add("bump");
-      fireEffects();
-      if (navigator.vibrate) navigator.vibrate([50, 30, 70]);
-      app.classList.add("shake");
-      setTimeout(() => app.classList.remove("shake"), 380);
-      setTimeout(() => switchScreen("wheel"), 950);
-    }
-
-    function fireEffects() {
-      const emojis = ["🍚", "🍜", "🥘", "🍣", "🍖", "🥳", "😎", "🔥", "🍤", "🍻"];
-      const colors = ["#ff7043", "#ffd166", "#85dcb8", "#8d99ae", "#b8a1ff", "#ff9f80"];
+    function hearts() {
       fxLayer.innerHTML = "";
-
-      for (let i = 0; i < 24; i += 1) {
-        const node = document.createElement("span");
-        node.className = "fall-emoji";
-        node.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        node.style.left = `${random(0, 96)}%`;
-        node.style.animationDelay = `${random(0, 260)}ms`;
-        node.style.setProperty("--drift", `${random(-70, 70)}px`);
-        node.style.setProperty("--spin", `${random(120, 520)}deg`);
-        fxLayer.appendChild(node);
+      const list = ["💗", "💕", "💖", "💘", "🍚", "🥢"];
+      for (let i = 0; i < 34; i += 1) {
+        const item = document.createElement("span");
+        item.className = "fall";
+        item.textContent = list[Math.floor(Math.random() * list.length)];
+        item.style.left = `${random(0, 96)}%`;
+        item.style.animationDelay = `${random(0, 260)}ms`;
+        item.style.setProperty("--drift", `${random(-70, 70)}px`);
+        item.style.setProperty("--spin", `${random(160, 560)}deg`);
+        fxLayer.appendChild(item);
       }
-
-      for (let i = 0; i < 42; i += 1) {
-        const node = document.createElement("i");
-        node.className = "confetti";
-        node.style.left = `${random(0, 98)}%`;
-        node.style.background = colors[Math.floor(Math.random() * colors.length)];
-        node.style.animationDelay = `${random(0, 360)}ms`;
-        node.style.setProperty("--drift", `${random(-90, 90)}px`);
-        node.style.setProperty("--spin", `${random(220, 760)}deg`);
-        fxLayer.appendChild(node);
-      }
-
       setTimeout(() => { fxLayer.innerHTML = ""; }, 1900);
     }
 
-    function renderWheelLabels() {
-      foods.forEach((food, index) => {
-        const label = document.createElement("div");
-        const segment = 360 / foods.length;
-        const angle = index * segment + segment / 2 - 90;
-        label.className = "wheel-label";
-        label.textContent = food;
-        label.style.transform = `rotate(${angle}deg) translateX(var(--label-radius)) rotate(91deg)`;
-        wheel.appendChild(label);
-      });
-    }
-
-    function spinWheel() {
-      if (state.spinning) return;
-      state.spinning = true;
-      spinBtn.disabled = true;
-      spinBtn.textContent = "命运翻炒中...";
-      nextFoodBtn.hidden = true;
-      foodResult.textContent = "";
-      wheel.dataset.center = "转";
-      wheelBadge.classList.remove("show");
-      wheelBadge.textContent = "";
-
-      const index = Math.floor(Math.random() * foods.length);
-      const segment = 360 / foods.length;
-      const targetCenter = index * segment + segment / 2;
-      const extraTurns = Math.floor(random(5, 9)) * 360;
-      const stopAtPointer = 360 - targetCenter;
-      const currentModulo = ((state.currentRotation % 360) + 360) % 360;
-      const delta = extraTurns + ((stopAtPointer - currentModulo + 360) % 360);
-      state.currentRotation += delta;
-      state.food = foods[index];
-
-      wheel.style.transitionDuration = `${random(5.2, 7.2)}s`;
-      wheel.style.transform = `rotate(${state.currentRotation}deg)`;
-    }
-
-    wheel.addEventListener("transitionend", () => {
-      if (!state.spinning) return;
-      state.spinning = false;
-      spinBtn.disabled = false;
-      spinBtn.textContent = "🎯 再转一次";
-      wheel.dataset.center = state.food;
-      wheelBadge.textContent = state.food;
-      wheelBadge.classList.add("show");
-      foodResult.innerHTML = `今晚吃：<strong>${state.food}</strong>`;
-      nextFoodBtn.hidden = false;
+    yesBtn.addEventListener("click", () => {
+      hearts();
+      if (navigator.vibrate) navigator.vibrate([40, 30, 60]);
+      setTimeout(() => go("yes"), 620);
     });
 
-    function renderSuccess() {
-      finalFood.textContent = state.food || "✨ 神秘选项";
-      finalTime.textContent = state.time || "今天晚上";
-    }
+    noBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      showToast("别点这个，系统会伤心。");
+      moveNo();
+    });
+    noBtn.addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      showToast("抓不到吧。");
+      moveNo();
+    }, { passive: false });
+    noBtn.addEventListener("pointerenter", moveNo);
 
-    yesBtn.addEventListener("click", acceptDinner);
-    noBtn.addEventListener("click", punishNoClick);
-    noBtn.addEventListener("touchstart", punishNoClick, { passive: false });
-    noBtn.addEventListener("pointerenter", moveNoButton);
-    spinBtn.addEventListener("click", spinWheel);
-    nextFoodBtn.addEventListener("click", () => switchScreen("time"));
+    document.getElementById("nextToDate").addEventListener("click", () => go("date"));
+    document.getElementById("confirmDate").addEventListener("click", () => go("food"));
+    document.getElementById("resetDate").addEventListener("click", () => showToast("不许重置，就 7月27日。"));
 
-    document.querySelectorAll("[data-time]").forEach((btn) => {
+    document.querySelectorAll(".food").forEach((btn) => {
       btn.addEventListener("click", () => {
-        state.time = btn.dataset.time;
-        switchScreen("success");
+        document.querySelectorAll(".food").forEach((food) => food.classList.remove("selected"));
+        btn.classList.add("selected");
+        state.food = btn.dataset.food;
+        finishBtn.classList.remove("disabled");
+        finishBtn.textContent = "OK 就它 💅";
       });
     });
 
-    lazyTimeBtn.addEventListener("click", () => {
-      lazyTimeBtn.textContent = lazyTexts[state.lazyTimeClicks % lazyTexts.length];
-      state.lazyTimeClicks += 1;
-      lazyTimeBtn.animate(
-        [
-          { transform: "translateX(0) rotate(0deg)" },
-          { transform: "translateX(-8px) rotate(-1deg)" },
-          { transform: "translateX(8px) rotate(1deg)" },
-          { transform: "translateX(0) rotate(0deg)" }
-        ],
-        { duration: 260, easing: "ease-out" }
-      );
-      if (navigator.vibrate) navigator.vibrate(24);
+    finishBtn.addEventListener("click", () => {
+      if (!state.food) {
+        showToast("先点一个吃的。");
+        return;
+      }
+      finalFood.textContent = state.food;
+      hearts();
+      setTimeout(() => go("done"), 430);
     });
 
     window.addEventListener("resize", () => {
-      if (state.screen === "intro") moveNoButton();
+      if (state.screen === "ask") moveNo();
     });
 
-    wheel.dataset.center = "吃";
-    renderWheelLabels();
-    startIntroTimers();
+    moveNo();
   </script>
 </body>
 </html>
