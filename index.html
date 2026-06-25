@@ -100,6 +100,12 @@
       pointer-events: auto;
     }
 
+    [data-screen="ask"].screen {
+      justify-content: flex-start;
+      gap: 18px;
+      padding-top: max(78px, env(safe-area-inset-top));
+    }
+
     .meme {
       display: grid;
       place-items: center;
@@ -120,61 +126,102 @@
       margin-bottom: 0;
     }
 
-    .meme img,
+    .meme img {
+      width: 200px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 20px rgba(222,75,130,0.18));
+      transform: rotate(-1deg);
+      display: block;
+    }
+
     .meme-duo img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
       display: block;
     }
 
     .meme.photo {
-      width: min(54vw, 208px);
-      height: min(68vw, 262px);
-      overflow: hidden;
-      border: 4px solid rgba(255, 255, 255, 0.86);
-      border-radius: 44% 56% 48% 52% / 42% 46% 54% 58%;
-      background: #fff;
+      width: auto;
+      height: auto;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .meme.photo img {
-      border-radius: inherit;
-      background: #fff;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    [data-screen="ask"] .meme.photo {
+      width: auto;
     }
 
     [data-screen="ask"] .meme.photo img {
-      object-position: 42% 48%;
-      transform: scale(1.02);
+      width: 200px;
+      height: auto;
+      filter: drop-shadow(0 12px 20px rgba(222,75,130,0.18));
+      transform: rotate(-1deg);
     }
 
     [data-screen="yes"] .meme.photo img {
-      object-position: 52% 42%;
-      transform: scale(1.03);
+      width: 200px;
+      height: auto;
+      filter: drop-shadow(0 12px 20px rgba(222,75,130,0.18));
+      transform: rotate(-1deg);
+    }
+
+    .bottom-stickers {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 18px;
+      margin-top: -4px;
+      pointer-events: none;
+    }
+
+    .bottom-stickers img {
+      width: 200px;
+      height: auto;
+      filter: drop-shadow(0 12px 20px rgba(222,75,130,0.18));
+      transform: rotate(-1deg);
+      display: block;
+    }
+
+    .bottom-stickers img:last-child {
+      transform: rotate(1deg);
     }
 
     .meme-duo {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      width: min(82vw, 314px);
+      width: min(86vw, 330px);
       margin-bottom: -4px;
       filter: drop-shadow(0 15px 18px rgba(222, 75, 130, 0.16));
     }
 
     .meme-duo img {
-      aspect-ratio: 0.88;
-      border: 4px solid rgba(255, 255, 255, 0.86);
-      border-radius: 28px;
+      padding: 8px;
+      aspect-ratio: auto;
+      border: 0;
+      border-radius: 26% 32% 28% 30% / 24% 28% 32% 34%;
       background: #fff;
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.96),
+        0 12px 22px rgba(222, 75, 130, 0.16);
     }
 
     .meme-duo img:first-child {
-      object-position: 50% 48%;
       transform: rotate(-4deg);
     }
 
     .meme-duo img:last-child {
-      object-position: 50% 46%;
       transform: rotate(5deg);
     }
 
@@ -217,6 +264,10 @@
       margin-top: 22px;
     }
 
+    [data-screen="ask"] .actions {
+      position: static;
+    }
+
     .pill {
       min-width: 132px;
       height: 58px;
@@ -245,8 +296,8 @@
       box-shadow: 0 13px 20px rgba(40, 13, 33, 0.28), 0 0 0 4px rgba(255, 95, 158, 0.32);
       font-size: 21px;
       letter-spacing: 0;
-      animation: noPulse 760ms ease-in-out infinite;
-      transition: left 560ms cubic-bezier(.18,.89,.32,1.28), top 560ms cubic-bezier(.18,.89,.32,1.28), transform 180ms ease;
+      animation: noPulse 420ms ease-in-out infinite;
+      transition: left 180ms cubic-bezier(.18,.89,.32,1.28), top 180ms cubic-bezier(.18,.89,.32,1.28), transform 120ms ease;
     }
 
     .pill.disabled {
@@ -513,9 +564,11 @@
 
     @media (max-height: 720px) {
       .screen { gap: 12px; padding-top: max(18px, env(safe-area-inset-top)); }
+      [data-screen="ask"].screen { gap: 12px; padding-top: max(42px, env(safe-area-inset-top)); }
       .meme { width: min(34vw, 124px); height: min(34vw, 124px); font-size: min(21vw, 82px); }
-      .meme.photo { width: min(45vw, 172px); height: min(56vw, 216px); }
+      .meme.photo { width: auto; height: auto; padding: 0; }
       .meme-duo { width: min(72vw, 250px); }
+      .bottom-stickers img { width: 150px; }
       .card { padding: 21px 18px 19px; }
       h1 { font-size: 28px; }
       h2 { font-size: 24px; }
@@ -545,7 +598,7 @@
 
     <section class="screen active" data-screen="ask">
       <div class="meme photo" aria-hidden="true">
-        <img src="./assets/cat-ask.jpg" alt="">
+        <img src="./assets/knockout%203.PNG" alt="">
       </div>
       <div class="card">
         <h1>要一起吃饭饭吗？</h1>
@@ -559,7 +612,7 @@
 
     <section class="screen" data-screen="yes">
       <div class="meme photo" aria-hidden="true">
-        <img src="./assets/cat-yes.jpg" alt="">
+        <img src="./assets/knockout.PNG" alt="">
       </div>
       <div class="card">
         <h2>没想到你会点yes</h2>
@@ -569,6 +622,9 @@
     </section>
 
     <section class="screen" data-screen="date">
+      <div class="meme photo" aria-hidden="true">
+        <img src="./assets/knockout%202.PNG" alt="">
+      </div>
       <div class="date-picker">
         <h2>什么时候集合？</h2>
         <div class="picker-wrap">
@@ -643,6 +699,9 @@
           <div><span>时间</span><span class="mini" id="finalTime">今天 19:00</span></div>
           <div><span>吃什么</span><span class="mini" id="finalFood">还没选</span></div>
         </div>
+      </div>
+      <div class="bottom-stickers" aria-hidden="true">
+        <img src="./assets/knockout%205.PNG" alt="">
       </div>
     </section>
 
@@ -724,11 +783,11 @@
       const btnRect = noBtn.getBoundingClientRect();
       const margin = 12;
       const maxLeft = appRect.width - btnRect.width - margin;
-      const maxTop = appRect.height - btnRect.height - margin;
+      const maxTop = Math.min(appRect.height * 0.72, appRect.height - btnRect.height - margin);
       noBtn.style.left = `${random(margin, Math.max(margin, maxLeft))}px`;
       noBtn.style.top = `${random(margin, Math.max(margin, maxTop))}px`;
       clearTimeout(state.noTimer);
-      state.noTimer = setTimeout(moveNo, random(500, 800));
+      state.noTimer = setTimeout(moveNo, 200);
     }
 
     function stopNo() {
@@ -776,7 +835,7 @@
       state.day = "今天";
       state.hour = 19;
       renderPicker();
-      showToast("重置成今天，别想太多。");
+      showToast("重置成今天，别想太。");
     });
 
     document.querySelectorAll(".date-option[data-day]").forEach((btn) => {
