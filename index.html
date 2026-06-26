@@ -527,6 +527,12 @@
       animation: cardIn 420ms cubic-bezier(.2,.85,.2,1) both;
     }
 
+    .result-card.exporting,
+    .result-card.exporting * {
+      animation: none !important;
+      transition: none !important;
+    }
+
     .result-sticker {
       position: relative;
       width: 230px;
@@ -713,13 +719,13 @@
 
     .result-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      place-items: center;
       width: min(100%, 342px);
       padding: 0 4px;
     }
 
     .result-btn {
+      width: min(100%, 250px);
       height: 51px;
       border: 1.5px solid rgba(255, 159, 192, 0.78);
       border-radius: 15px;
@@ -1008,8 +1014,7 @@
         <div class="result-footer">♥♥♥</div>
       </div>
       <div class="result-actions">
-        <button class="result-btn" id="saveResultBtn" type="button">📸 保存图片</button>
-        <button class="result-btn" id="shareResultBtn" type="button">💌 截图发给 TA</button>
+        <button class="result-btn" id="shareResultBtn" type="button">📸 截图发给 TA</button>
       </div>
     </section>
 
@@ -1017,7 +1022,6 @@
     <div class="fx-layer" id="fxLayer"></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     const state = {
       screen: "ask",
@@ -1041,7 +1045,6 @@
     const finalTime = document.getElementById("finalTime");
     const finalLead = document.getElementById("finalLead");
     const resultCard = document.getElementById("resultCard");
-    const saveResultBtn = document.getElementById("saveResultBtn");
     const shareResultBtn = document.getElementById("shareResultBtn");
     const shareEntryBtn = document.getElementById("shareEntryBtn");
     const shareFood = document.getElementById("shareFood");
@@ -1132,36 +1135,6 @@
         fxLayer.appendChild(item);
       }
       setTimeout(() => { fxLayer.innerHTML = ""; }, 1900);
-    }
-
-    async function saveResultImage() {
-      if (!resultCard) return;
-      if (!window.html2canvas) {
-        showToast("图片组件没加载好，先截图也能领资格。");
-        return;
-      }
-
-      try {
-        const canvas = await window.html2canvas(resultCard, {
-          backgroundColor: null,
-          scale: Math.min(2, window.devicePixelRatio || 1),
-          useCORS: true,
-        });
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            showToast("保存失败，直接截图也算通过。");
-            return;
-          }
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "dinner-achievement.png";
-          link.click();
-          setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-          showToast("图片已生成，没弹出就手动截图。");
-        }, "image/png");
-      } catch (error) {
-        showToast("保存失败，直接截图发给 TA。");
-      }
     }
 
     yesBtn.addEventListener("click", () => {
@@ -1271,7 +1244,6 @@
       renderShareCard();
       go("share");
     });
-    saveResultBtn.addEventListener("click", saveResultImage);
     shareResultBtn.addEventListener("click", () => {
       showToast("截图发送给邀请人即可领取约饭资格 😎");
     });
